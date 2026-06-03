@@ -346,6 +346,11 @@ textarea {
     bottom: 80px;
     right: 16px;
   }
+
+  /* Hide section indicators on mobile to prevent overlap */
+  .section-indicators {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {

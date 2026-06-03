@@ -154,6 +154,7 @@
     opacity: 0;
     padding: 80px 32px;
     overflow-y: auto;
+    z-index: 1000;
   }
 
   .navbar-links.open {

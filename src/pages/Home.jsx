@@ -106,15 +106,16 @@ export default function Home() {
 
         {/* Section Indicators */}
         <div
+          className="section-indicators"
           style={{
             position: 'fixed',
-            right: '2rem',
+            right: '1rem',
             top: '50%',
             transform: 'translateY(-50%)',
-            zIndex: 100,
+            zIndex: 50,
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
+            gap: '0.75rem',
           }}
         >
           {sections.map((section) => (
@@ -131,14 +132,15 @@ export default function Home() {
                 }
               }}
               style={{
-                width: '12px',
-                height: '12px',
+                width: '10px',
+                height: '10px',
                 borderRadius: '50%',
                 border: '2px solid #3B82F6',
                 background: section.id === activeSection ? '#3B82F6' : 'transparent',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 padding: 0,
+                flexShrink: 0,
               }}
               aria-label={`Go to section ${section.id + 1}`}
             />
