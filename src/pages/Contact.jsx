@@ -1,0 +1,129 @@
+import { useState, useRef, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { FiSend, FiMail, FiMapPin, FiPhone, FiCheckCircle, FiArrowLeft } from 'react-icons/fi'
+import { FaGithub, FaLinkedin, FaInstagram, FaYoutube } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import PageTransition from '../components/PageTransition'
+import '../styles/Contact.css'
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.6, delay: i * 0.12, ease: 'easeOut' },
+  }),
+}
+
+export default function ContactPage() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const [submitted, setSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: localStorage.getItem('contact_name') || '',
+    email: localStorage.getItem('contact_email') || '',
+    subject: '',
+    message: localStorage.getItem('contact_message') || '',
+  })
+
+  useEffect(() => { localStorage.setItem('contact_name', formData.name) }, [formData.name])
+  useEffect(() => { localStorage.setItem('contact_email', formData.email) }, [formData.email])
+  useEffect(() => { localStorage.setItem('contact_message', formData.message) }, [formData.message])
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert('Harap isi semua field yang wajib (Nama, Email, dan Pesan).')
+      return
+    }
+    setSubmitted(true)
+  }
+
+  return (
+    <PageTransition>
+      <section className="contact section" ref={ref} style={{ paddingTop: '120px', minHeight: '100vh' }}>
+        <div className="container">
+          <motion.div
+            className="contact-info"
+            initial="hidden" animate={isInView ? 'visible' : 'hidden'}
+            variants={fadeIn} custom={0}
+          >
+            <h2 className="section-title">Get In <span className="highlight">Touch</span></h2>
+            <p className="section-subtitle">Have a project in mind? Let's work together!</p>
+            <p className="contact-description">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            </p>
+            <div className="contact-items">
+              <div className="contact-item">
+                <div className="contact-item-icon"><FiMail /></div>
+                <div className="contact-item-text">
+                  <span className="contact-item-label">Email</span>
+                  <span className="contact-item-value">emu200828@gmail.com</span>
+                </div>
+              </div>
+              <div className="contact-item">
+                <div className="contact-item-icon"><FiPhone /></div>
+                <div className="contact-item-text">
+                  <span className="contact-item-label">Phone</span>
+                  <span className="contact-item-value">+62 812-1072-0482</span>
+                </div>
+              </div>
+              <div className="contact-item">
+                <div className="contact-item-icon"><FiMapPin /></div>
+                <div className="contact-item-text">
+                  <span className="contact-item-label">Location</span>
+                  <span className="contact-item-value">Tangerang Selatan, Indonesia</span>
+                </div>
+              </div>
+            </div>
+            <div className="contact-social">
+              <a href="https://github.com/emu200828-source" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
+              <a href="https://www.linkedin.com/in/imu-abdurroofi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></a>
+              <a href="https://instagram.com/emushi.2808" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+              <a href="https://www.youtube.com/@emu.shi2808" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><FaYoutube /></a>
+            </div>
+            <Link to="/" className="btn-primary" style={{ display: 'inline-flex', width: 'fit-content', marginTop: '8px' }}>
+              <FiArrowLeft /> Back to Home
+            </Link>
+          </motion.div>
+
+          <motion.div
+            className="contact-form-wrapper"
+            initial="hidden" animate={isInView ? 'visible' : 'hidden'}
+            variants={fadeIn} custom={2}
+          >
+            {submitted ? (
+              <div className="form-success">
+                <div className="form-success-icon"><FiCheckCircle /></div>
+                <h3 className="form-success-text">Message Sent Successfully!</h3>
+                <p className="form-success-sub">Thank you! I'll get back to you as soon as possible.</p>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="name">Your Name</label>
+                    <input type="text" id="name" name="name" className="form-input" placeholder="John Doe" value={formData.name} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="email">Your Email</label>
+                    <input type="email" id="email" name="email" className="form-input" placeholder="your@email.com" value={formData.email} onChange={handleChange} required />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="form-label" htmlFor="subject">Subject</label>
+                  <input type="text" id="subject" name="subject" className="form-input" placeholder="Project Collaboration" value={formData.subject} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                  <label className="form-label" htmlFor="message">Message</label>
+                  <textarea id="message" name="message" className="form-textarea" placeholder="Tell me about your project..." value={formData.message} onChange={handleChange} required />
+                </div>
+                <button type="submit" className="form-submit"><FiSend /> Send Message</button>
+              </form>
+            )}
+          </motion.div>
+        </div>
+      </section>
+    </PageTransition>
+  )
+}

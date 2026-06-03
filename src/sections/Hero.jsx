@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiDownload, FiArrowRight, FiGithub, FiLinkedin, FiInstagram } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowRight, FiGithub, FiLinkedin, FiInstagram } from 'react-icons/fi'
 import { FaCode, FaYoutube } from 'react-icons/fa'
 import '../styles/Hero.css'
 
@@ -19,11 +20,11 @@ export default function Hero() {
   const [wordIndex, setWordIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
   const [deleting, setDeleting] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const current = words[wordIndex]
     let timeout
-
     if (!deleting && charIndex < current.length) {
       timeout = setTimeout(() => setCharIndex((c) => c + 1), 80)
     } else if (!deleting && charIndex === current.length) {
@@ -34,13 +35,8 @@ export default function Hero() {
       setDeleting(false)
       setWordIndex((w) => (w + 1) % words.length)
     }
-
     return () => clearTimeout(timeout)
   }, [charIndex, deleting, wordIndex])
-
-  const scrollToProjects = () => {
-    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   return (
     <section id="hero" className="hero">
@@ -98,11 +94,11 @@ export default function Hero() {
             animate="visible"
             custom={4}
           >
-            <button className="btn-primary" onClick={scrollToProjects}>
+            <button className="btn-primary" onClick={() => navigate('/project')}>
               View My Work <FiArrowRight />
             </button>
-            <button className="btn-outline">
-              <FiDownload /> Download CV
+            <button className="btn-outline" onClick={() => navigate('/contact')}>
+              Contact Me <FiArrowRight />
             </button>
           </motion.div>
 
@@ -157,7 +153,7 @@ export default function Hero() {
           <div className="hero-stat-label">Years Experience</div>
         </div>
         <div className="hero-stat-item">
-          <div className="hero-stat-number">3+</div>
+          <div className="hero-stat-number">7+</div>
           <div className="hero-stat-label">Projects Done</div>
         </div>
         <div className="hero-stat-item">

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { FiSend, FiMail, FiMapPin, FiPhone, FiCheckCircle } from 'react-icons/fi'
 import { FaGithub, FaLinkedin, FaInstagram, FaYoutube } from 'react-icons/fa'
@@ -18,11 +18,15 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
   const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    name: localStorage.getItem('contact_name') || '',
+    email: localStorage.getItem('contact_email') || '',
     subject: '',
-    message: '',
+    message: localStorage.getItem('contact_message') || '',
   })
+
+  useEffect(() => { localStorage.setItem('contact_name', formData.name) }, [formData.name])
+  useEffect(() => { localStorage.setItem('contact_email', formData.email) }, [formData.email])
+  useEffect(() => { localStorage.setItem('contact_message', formData.message) }, [formData.message])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -30,6 +34,10 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert('Harap isi semua field yang wajib (Nama, Email, dan Pesan).')
+      return
+    }
     setSubmitted(true)
   }
 

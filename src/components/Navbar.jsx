@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FiLogOut } from 'react-icons/fi'
 import '../styles/Navbar.css'
 
 const navLinks = [
-  { name: 'Home', href: '#hero' },
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Projects', path: '/project' },
+  { name: 'Tugas SKL', path: '/tugas-skl' },
+  { name: 'Contact', path: '/contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+  const username = localStorage.getItem('username') || ''
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -20,18 +26,24 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleNavClick = (href) => {
+  useEffect(() => {
     setMobileOpen(false)
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }, [location])
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('username')
+    setMobileOpen(false)
+    navigate('/login', { replace: true })
   }
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container">
-        <a href="#hero" className="navbar-logo" onClick={() => handleNavClick('#hero')}>
+        <Link to="/" className="navbar-logo">
+          <span className="navbar-logo-icon">P</span>
           Portfolio.
-        </a>
+        </Link>
 
         <button
           className={`navbar-hamburger ${mobileOpen ? 'active' : ''}`}
@@ -64,17 +76,43 @@ export default function Navbar() {
 
         <div className={`navbar-links ${mobileOpen ? 'open' : ''}`}>
           {navLinks.map((link, index) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              onClick={() => handleNavClick(link.href)}
+            <motion.div
+              key={link.path}
               initial={mobileOpen ? { opacity: 0, x: 30 } : false}
               animate={mobileOpen ? { opacity: 1, x: 0 } : false}
               transition={{ duration: 0.3, delay: index * 0.08 }}
             >
-              {link.name}
-            </motion.a>
+              <Link
+                to={link.path}
+                className={location.pathname === link.path ? 'active' : ''}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.name}
+              </Link>
+            </motion.div>
           ))}
+          {isLoggedIn && (
+            <>
+              <motion.span
+                className="navbar-welcome"
+                initial={mobileOpen ? { opacity: 0, x: 30 } : false}
+                animate={mobileOpen ? { opacity: 1, x: 0 } : false}
+                transition={{ duration: 0.3, delay: navLinks.length * 0.08 }}
+              >
+                Welcome, {username}
+              </motion.span>
+              <motion.button
+                className="navbar-logout-btn"
+                onClick={handleLogout}
+                initial={mobileOpen ? { opacity: 0, x: 30 } : false}
+                animate={mobileOpen ? { opacity: 1, x: 0 } : false}
+                transition={{ duration: 0.3, delay: (navLinks.length + 1) * 0.08 }}
+              >
+                <FiLogOut />
+                Logout
+              </motion.button>
+            </>
+          )}
         </div>
       </div>
     </nav>

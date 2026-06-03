@@ -1,55 +1,22 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { FiExternalLink, FiGithub } from 'react-icons/fi'
-import { FaCode, FaUsers, FaUserAlt } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { FiExternalLink, FiGithub, FiArrowRight } from 'react-icons/fi'
+import Tilt from 'react-parallax-tilt'
+import projects from '../data/projects'
 import '../styles/Projects.css'
 
-const projects = [
-  {
-    title: 'Massage Web',
-    description: 'Website layanan massage modern dengan desain clean dan responsive.',
-    icon: <FaCode />,
-    tags: ['HTML', 'CSS', 'JavaScript', 'Responsive'],
-    github: 'https://github.com/emu200828-source/massage-web',
-    live: 'https://emu200828-source.github.io/massage-web/',
-  },
-  {
-    title: 'Web Tim Qurban',
-    description: 'Website modern untuk tim qurban dengan tampilan profesional dan informatif.',
-    icon: <FaUsers />,
-    tags: ['React', 'Tailwind', 'Lovable', 'Modern'],
-    github: 'https://github.com/emu200828-source',
-    live: 'https://miymosya-qurban.lovable.app',
-  },
-  {
-    title: 'Web Bio',
-    description: 'Website bio personal minimalis dan modern.',
-    icon: <FaUserAlt />,
-    tags: ['HTML', 'CSS', 'JavaScript', 'Minimalis'],
-    github: 'https://github.com/emu200828-source/web-bio',
-    live: 'https://emu200828-source.github.io/web-bio/',
-  },
-]
-
-const container = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
+const container = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 const item = {
   hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
 export default function Projects() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const navigate = useNavigate()
+  const featured = projects.slice(0, 3)
 
   return (
     <section id="projects" className="section" ref={ref}>
@@ -77,30 +44,46 @@ export default function Projects() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {projects.map((project) => (
-            <motion.div key={project.title} className="project-card" variants={item}>
-              <div className="project-image">
-                <div className="project-image-icon">{project.icon}</div>
-                <div className="project-image-overlay">
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                    <FiGithub />
-                  </a>
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label="Live Demo">
-                    <FiExternalLink />
+          {featured.map((project) => (
+            <Tilt key={project.title} tiltMaxAngleX={5} tiltMaxAngleY={5} glareEnable={false} scale={1.02} transitionSpeed={400}>
+              <motion.div className="project-card" variants={item}>
+                <div className="project-image" style={{ background: project.gradient }}>
+                  <span className="project-image-text">{project.image}</span>
+                  <div className="project-image-overlay">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                      <FiGithub />
+                    </a>
+                    <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label="Live Demo">
+                      <FiExternalLink />
+                    </a>
+                  </div>
+                </div>
+                <div className="project-info">
+                  <h3 className="project-title">{project.title}</h3>
+                  <p className="project-description">{project.description}</p>
+                  <div className="project-tags">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="project-tag">{tag}</span>
+                    ))}
+                  </div>
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="project-live-btn">
+                    <FiExternalLink /> Live Demo
                   </a>
                 </div>
-              </div>
-              <div className="project-info">
-                <h3 className="project-title">{project.title}</h3>
-                <p className="project-description">{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="project-tag">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Tilt>
           ))}
+        </motion.div>
+
+        <motion.div
+          style={{ textAlign: 'center', marginTop: '48px' }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <button className="btn-primary" onClick={() => navigate('/project')}>
+            View All Projects <FiArrowRight />
+          </button>
         </motion.div>
       </div>
     </section>

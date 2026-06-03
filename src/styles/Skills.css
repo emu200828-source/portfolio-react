@@ -10,8 +10,8 @@
   align-items: center;
   gap: 12px;
   padding: 28px 16px;
-  background: rgba(17, 24, 39, 0.5);
-  border: 1px solid rgba(59, 130, 246, 0.08);
+  background: var(--bg-card, rgba(17, 24, 39, 0.5));
+  border: 1px solid var(--card-border, rgba(59, 130, 246, 0.08));
   border-radius: 16px;
   transition: all 0.3s ease;
   cursor: default;
@@ -37,7 +37,7 @@
 .skill-name {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--text-primary, #cbd5e1);
   text-align: center;
 }
 
