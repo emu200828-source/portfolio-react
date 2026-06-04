@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Projects', path: '/project' },
+  { name: 'Sertifikat', path: '/sertifikat' },
   { name: 'Tugas SKL', path: '/tugas-skl' },
   { name: 'Contact', path: '/contact' },
 ]

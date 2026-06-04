@@ -12,6 +12,7 @@ import AboutPage from './pages/About'
 import ProjectsPage from './pages/Projects'
 import TugasSklPage from './pages/TugasSkl'
 import ContactPage from './pages/Contact'
+import SertifikatPage from './pages/Sertifikat'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 
@@ -51,6 +52,7 @@ export default function App() {
                 <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
                 <Route path="/about" element={<RequireAuth><AboutPage /></RequireAuth>} />
                 <Route path="/project" element={<RequireAuth><ProjectsPage /></RequireAuth>} />
+                <Route path="/sertifikat" element={<RequireAuth><SertifikatPage /></RequireAuth>} />
                 <Route path="/contact" element={<RequireAuth><ContactPage /></RequireAuth>} />
                 <Route path="/tugas-skl" element={<RequireAuth><TugasSklPage /></RequireAuth>} />
                 <Route path="/dashboard" element={

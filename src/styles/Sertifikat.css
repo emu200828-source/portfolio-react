@@ -1,0 +1,284 @@
+.sertifikat-page {
+  position: relative;
+  background: var(--bg-primary);
+}
+
+.sertifikat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.sertifikat-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 32px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sertifikat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: #3b82f6;
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2);
+}
+
+.sertifikat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.sertifikat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sertifikat-judul {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.sertifikat-penerbit {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.sertifikat-tahun {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  color: #3b82f6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: fit-content;
+  margin-top: 4px;
+}
+
+/* Modal */
+.sertifikat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.sertifikat-modal {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 90vh;
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.sertifikat-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.sertifikat-modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  transform: scale(1.1);
+}
+
+.sertifikat-modal-content {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.sertifikat-modal-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sertifikat-modal-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .sertifikat-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sertifikat-page {
+    padding-top: 100px;
+  }
+
+  .sertifikat-card {
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .sertifikat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .sertifikat-judul {
+    font-size: 1.05rem;
+  }
+
+  .sertifikat-penerbit {
+    font-size: 0.85rem;
+  }
+
+  .sertifikat-modal {
+    height: 85vh;
+    padding: 16px;
+  }
+
+  .sertifikat-modal-close {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+    top: 16px;
+    right: 16px;
+  }
+
+  .sertifikat-modal-download {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sertifikat-page {
+    padding-top: 90px;
+  }
+
+  .sertifikat-grid {
+    gap: 16px;
+  }
+
+  .sertifikat-card {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .sertifikat-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.4rem;
+  }
+
+  .sertifikat-judul {
+    font-size: 0.95rem;
+  }
+
+  .sertifikat-penerbit {
+    font-size: 0.8rem;
+  }
+
+  .sertifikat-tahun {
+    font-size: 0.8rem;
+    padding: 3px 10px;
+  }
+
+  .sertifikat-modal-overlay {
+    padding: 12px;
+  }
+
+  .sertifikat-modal {
+    height: 90vh;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .sertifikat-modal-close {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    top: 12px;
+    right: 12px;
+  }
+
+  .sertifikat-modal-download {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .sertifikat-card {
+    padding: 16px;
+  }
+
+  .sertifikat-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+
+  .sertifikat-judul {
+    font-size: 0.9rem;
+  }
+}
