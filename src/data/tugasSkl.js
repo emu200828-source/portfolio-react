@@ -31,6 +31,14 @@ const tugasSkl = [
     tags: ['Quran', 'Tracker', 'Productivity'],
     live: 'https://quran-memorization-tracker-zeta.vercel.app/',
   },
+  {
+    title: 'Ujian Tahfidz Juz 27 & 28',
+    description: 'Dokumentasi ujian tahfidz Juz 27 dan 28 dalam format video.',
+    image: 'UT',
+    gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
+    tags: ['Tahfidz', 'Quran', 'Video'],
+    live: 'https://drive.google.com/drive/folders/1JPShMhunSJ62IEouj7DYDU-pEtMNARJU?usp=drive_link',
+  },
 ]
 
 export default tugasSkl
